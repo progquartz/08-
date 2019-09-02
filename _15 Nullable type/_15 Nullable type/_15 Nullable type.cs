@@ -31,6 +31,8 @@ namespace _15_Nullable_type
             bool? b = null;
             int?[] a = new int?[100]; // ?를 계속해서 넣어줘야만 한다. 아예 다른 친구 취급하는듯.
 
+
+             // 정적클래스 개꿀
             /*
             Nullable<T> 구조체는 값을 가지고 있는지를 체크하는 (즉, missing value가 아닌지를 체크하는) HasValue 속성과 실제 값을 나타내는 Value 속성을 가지고 있다.
             Nullable 구조체는 타입 캐스팅을 통한 변환이나 암묵적 변환을 통해 (Non-nullable) Value 타입으로 변환된다. 
@@ -60,6 +62,25 @@ namespace _15_Nullable_type
 
             // 만약 selected가 NULL이면 false를 할당
             this._Selected = selected ?? false;
+        }
+
+        /*
+        .NET Framework에 있는 정적(static) 클래스 System.Nullable 은 두개의 Nullable 객체를 비교하거나 (Compare(), Equals() 메서드),
+        특정 Nullable 타입이 어떤 Value 타입에 기반을 두고 있는지 알아내는 (GetUnderlyingType() 메서드) 기능을 제공하고 있다.
+        이 정적 클래스는 Nullable<T> 타입을 위한 몇 가지 편리한 정적 메서드들을 제공한다. 
+        */
+
+        void NullableTest()
+        {
+            int? a = null;
+            int? b = 0;
+            int result = Nullable.Compare<int>(a, b); // 비교하는 거, null값이 있기 때문에 비정상적인 값이 감지되어 -1값이 도출되었다. 큰지 작은지 같은지를 비교한다.
+            Console.WriteLine(result); //결과 -1
+
+            double? c = 0.01;
+            double? d = 0.0100;
+            bool result2 = Nullable.Equals<double>(c, d); // 같은지 물어보는것, Equals()는 같은지 아닌지만 비교한다. 소팅 같은 기능을 위해서는 Equals 가 아닌 Compare가 필요하다.
+            Console.WriteLine(result2); //결과 true
         }
     }
 }
